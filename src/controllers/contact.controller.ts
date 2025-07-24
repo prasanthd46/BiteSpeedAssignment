@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { processContact } from '../services/contact.service';
 import { validateContactRequestBody } from '../utils/validator';
+import { Error } from 'mongoose';
 
 export const contactController = async (req: Request, res: Response) => {
   try {
@@ -10,9 +11,7 @@ export const contactController = async (req: Request, res: Response) => {
     
     res.status(200).json(result);
   
-  } catch (err:any) {
-   
-    res.status(400).json({message:err.message})
-  
+  } catch (err) {
+    res.status(400).json({message: err})
   }
 };

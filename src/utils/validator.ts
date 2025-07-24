@@ -2,7 +2,7 @@ export function validateContactRequestBody(body:any):{email:string | null , phon
     const email = body.email?? null
     const phoneNumber = body.phoneNumber ?? null
     if(!email && !phoneNumber ){
-        throw { status:400,message : "Email or Phonenumber is required "}
+        throw { status:400,message : "Email or Phone number is required "}
     } 
     return {email,phoneNumber}
 }

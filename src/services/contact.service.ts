@@ -8,7 +8,7 @@ export const processContact = async(email:string | null , phoneNumber : string |
        
     const result = await findMatchingContacts(email,phoneNumber)
 
-    const strictMatchingContacts = result.filter((obj) => (obj.email == email && obj.phonenumber == phoneNumber)) // If Both Matches for on Record
+    const strictMatchingContacts = result.filter((obj) => (obj.email == email && obj.phonenumber == phoneNumber)) 
 
     if(strictMatchingContacts.length>0){
         const id = strictMatchingContacts[0].linkedid?? strictMatchingContacts[0].id
