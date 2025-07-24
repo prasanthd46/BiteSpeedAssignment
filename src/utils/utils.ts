@@ -5,6 +5,7 @@ async function findMatchingContacts(email:string | null , phoneNumber : string |
     const result = await client.query(
             `select * from contacts where email = $1 OR phonenumber = $2 ORDER BY createdAt ASC `,[email,phoneNumber]
         )
+      console.log(result.rows)
     return result.rows;
 }
 
@@ -46,8 +47,8 @@ function contactResponse(contacts: contactRecord[]):contactResponseType {
   
   const primary = contacts.find(c => c.linkprecedence === 'primary') || contacts[0];
 
-  const emails = Array.from(new Set(contacts.map(c =>  c.email))) as string[]
-  const phoneNumbers  = Array.from(new Set(contacts.map(c => c.phonenumber))) as string[]
+  const emails = Array.from(new Set(contacts.map(c =>  c.email).filter(Boolean))) as string[]
+  const phoneNumbers  = Array.from(new Set(contacts.map(c => c.phonenumber).filter(Boolean))) as string[]
 
   const secondaryContactIds = contacts
     .filter(c => c.linkprecedence === 'secondary')

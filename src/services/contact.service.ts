@@ -8,9 +8,15 @@ export const processContact = async(email:string | null , phoneNumber : string |
        
     const result = await findMatchingContacts(email,phoneNumber)
 
-    const strictMatchingContacts = result.filter((obj) => (obj.email == email && obj.phonenumber == phoneNumber)) 
+    if(result.length >0 && (email == null || phoneNumber == null)){
+        const id = result[0].linkedid?? result[0].id
+        const group = await getAllGroupedContacts(id)
+        return contactResponse(group);
+    }
+    
+    const strictMatchingContacts = result.filter((obj) => ((obj.email == email ) && (obj.phonenumber == phoneNumber ))) 
 
-    if(strictMatchingContacts.length>0){
+    if(strictMatchingContacts.length>0 ){
         const id = strictMatchingContacts[0].linkedid?? strictMatchingContacts[0].id
         const group = await getAllGroupedContacts(id)
         return contactResponse(group);
@@ -39,6 +45,7 @@ export const processContact = async(email:string | null , phoneNumber : string |
                 await updateLinkedSecondaries(initialItem.id,nextItem.id)
             }
         }else{
+
             await insertContact(email,phoneNumber,initialItem.id,'secondary')
         }
     }else{
