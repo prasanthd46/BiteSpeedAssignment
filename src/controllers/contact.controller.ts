@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { processContact } from '../services/contact.service';
 import { validateContactRequestBody } from '../utils/validator';
-import { Error } from 'mongoose';
+
 
 export const contactController = async (req: Request, res: Response) => {
   try {
